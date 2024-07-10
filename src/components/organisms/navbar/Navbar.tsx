@@ -1,27 +1,59 @@
+import { useRouter } from 'next/navigation'
+
 import type NavbarProps from './NavbarProps.type';
 
-export default function Navbar({ isUserAuthenticated, onLogout, onLogin, onSignup }: NavbarProps) {
+export default function Navbar({ isUserAuthenticated, onLogout }: NavbarProps) {
+
+  const router = useRouter();
+
     return (
-        <nav className="navbar navbar-expand-lg bg-light">
-        <div className="container-fluid">
-         
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">Sign In</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">Sign Up</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">Log Out</a>
-              </li>
-            </ul>
+        <nav role="navigation" className="navbar navbar-expand-lg navbar-dark bg-dark">
+           <div className="container-fluid justify-content-between">
+              <div className="collapse navbar-collapse" id="navbarNav">
+                {isUserAuthenticated && 
+                  <>
+                      <li className="nav-item mx-2">
+                        <a className="nav-link text-light active" aria-current="page" href="/">Home</a>
+                      </li>
+                      <li className="nav-item mx-2">
+                        <a className="nav-link text-light" aria-current="page" href="/profile">Profile</a>
+                      </li>
+                  </>
+                }
+              </div>
+              <div >
+                {
+                  !isUserAuthenticated && 
+                  <button 
+                    className="btn btn-primary me-2" 
+                    type="button"
+                    onClick={() => router.push('/signup')}
+                  >
+                    Sign Up
+                  </button>
+                }
+                    {
+                  !isUserAuthenticated && 
+                  <button 
+                    className="btn btn-outline-light me-2" 
+                    type="button"
+                    onClick={() => router.push('/signin')}
+                  >
+                    Sign In
+                  </button>
+                }
+                    {
+                  isUserAuthenticated && 
+                  <button 
+                    className="btn btn-outline-light me-2" 
+                    type="button"
+                    onClick={onLogout}
+                  >
+                    Log Out
+                  </button>
+                }
+              </div>
           </div>
-        </div>
       </nav>
     );
 }

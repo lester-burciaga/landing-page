@@ -1,9 +1,11 @@
-import Navbar from '@/components/navbar/Navbar'
+'use client'
+import Navbar from '@/components/organisms/navbar/Navbar';
+
 
 export default function ProfilePage() {
     return (
         <div>
-            <Navbar />
+            <Navbar isUserAuthenticated={true} onLogout={() => {}}/>
             <h1>Profile</h1>
         </div>
     );
